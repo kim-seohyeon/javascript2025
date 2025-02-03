@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lotto번호생성하기</title>
+<script type="text/javascript">
+	//로또번호: 1~45숫자중에 랜덤하게 생성하는 기능
+	//random():0~1사이의 실수를 랜덤하게 생성 --> 0.00000...~0.999999.. 
+	//랜덤 숫자 하나를 생성해서 반환해 주는 함수
+	function makeBall(){
+		let ball=0;
+		
+		return Math.floor(Math.random()*45)+1;;//1~45숫자 반환
+	}
+	
+	//생성된 번호를 배열에 저장하는 기능
+	//makeBall()함수를 활용
+	function lottoBalls(){
+		var balls= new Array();//생성된 번호를 저장할 배열 생성
+		var count = 0;
+        while(count < 7){
+            var ball = makeBall(); //숫자 하나 생성
+            if(balls.indexOf(ball) == -1){ //값이 존재하지 않으면 -1을 리턴한다. 
+                balls.push(ball); //생성된 숫자를 배열에 넣기
+                count++;
+            }
+			//indexOf 함수에 따라 ball의 값이 배열안에 없으면 -1, 배열 안에 이미 있으면 위치번호인 index가 나올텐데,
+			// -1일 때만 push코드가 실행되어 ball의 값이 balls에 들어가게 된다. 
+			// balls 속에 중복된 숫자가 생기지 않도록 만들어줌
+        }
+        console.log(balls.toString());
+		return balls;
+	}
+	
+	function lottoPrint(){
+		//실습문제: 정렬된 당첨번호 6개와 보너스 번호 1개로 나눠서 화면에 출력
+		//        [2,3,1,4,5,6,7] -> [2,3,1,4,5,6] , [7]
+		//                           [1,2,3,4,5,6] , [7]
+		//출력형식: 로또번호: 1-2-3-4-5-6     보너스번호: 7  
+		//배열관련 메서드를 활용해서 구현: sort(),push(),pop(),join()
+		//push(): 배열에 새로운 값을 추가하는 기능
+		//       --> 크기순 정렬을 위한 기능을 추가해야함, 오름차순
+		//       --> 7개를 입력받으면, [1,2,3,4,5,6,7] 1~6 로또번호, 7은 보너스번호
+		//       --> 1~6까지는 배열로 따로 저장하여 정렬하면 됨. 7번은 보너스번호로 별도 관리
+		//6개1개로 나눠서 출력, 정렬, 포맷(형식)
+        var balls7 = lottoBalls();
+		//pop(): 뒤에서 한개 잘라내기해서 가져오는 기능
+        var bonus = balls7.pop();
+		//sort(): 기본기능은 사전식, 오름차순 정렬 --> 크기순 정렬, 오름차순
+        //balls7.sort((a, b) => a-b); //익명함수로 크기순으로 정렬
+        //출력형식 "1-2-3-4-5-6" -> join("-")
+        var balls6 = balls7.join("-");
+        console.log(balls6); 
+        //DOM 탐색에 개념을 모르면...
+        // var spans = document.getElementsByTagName("span");
+        var spans = document.querySelectorAll("fieldset > span");
+        spans[1].innerHTML = `<strong>${balls6}</strong>`;
+        spans[3].innerHTML = `<strong>${bonus}</strong>`;
+        //set개념: Element.속성="값", get개념: var attributeval = Element.속성
+        //var spanBalls6 = spans[1].innerHTML;
+        // lottoBalls()
+	}
+</script>
+</head>
+<body>
+<fieldset>
+	<legend>로또번호 생성하기</legend>
+	<span>로또번호:</span>
+	<span id="randomNum">1-5-10-15-20-30</span>&nbsp;&nbsp;&nbsp;&nbsp;
+	<span>보너스번호:</span>
+	<span>40</span>
+	<button onclick="lottoPrint()">생성</button>
+</fieldset>
+</body>
+</html>

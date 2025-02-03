@@ -1,0 +1,28 @@
+<!DOCTYPE html> <!--문서 버전-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <script type="text/javascript" src="js/text.js">//링크걸면 끝</script>
+
+    <script>
+        //함수 선언 : function 키워드 사용
+        function embedded(){
+            var txt="내부작성방식";
+            console.log(txt); //브라우저 디버깅 기능에서 cosole창에 출력 기능 제공
+        }
+
+    </script>
+</head>
+<body>
+    <h1>자바스크립트 구성</h1>
+    <button onclick="var txt='inline방식입니다.'; alert(txt);">클릭</button>
+    <button onclick="embedded()">클릭</button>
+    <button onclick="linked()">클릭</button>
+    <script>
+        
+    </script>
+</body>
+</html>

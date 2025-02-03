@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function testSearch(){
+            /*
+            print("안녕");
+            var result = calcu(1, 2);
+            console.log(result);
+            document.getElementById("result").textContetn=result; //<span>내부</sapn>
+            //input 요소: <input value=""/>
+            document.getElementsByTagName("input")[0].value+="값"; //a=a+1;
+            var val = document.getElementsByTagName("input")[0].value;
+            */
+
+            //문제1
+            var test01 = document.getElementById("a");
+            console.log(test01);
+            var test01Parent = test01.parentNode; // <div> 객체 얻어옴
+            //console.log(test01Parent.tagname);
+            test01Parent.style.backgroundColor ="pink";
+            console.log(test01Parent.style.backgroundColor);
+
+            //문제2
+            var test04 = document.getElementById("b");
+            console.log(test04);
+            var test04ChildNodes = test04.childNodes;
+            console.log(test04ChildNodes[3].textContent);
+            test04ChildNodes[3].style.fontSize="20pt";
+
+        }
+        /*
+        function print(val){
+            console.log(val);
+        }
+        */
+
+        /*
+        function calcu(a, b){
+            return a + b;
+        }
+        */
+
+        //문제3
+        function testSibling(){
+            var test08 = document.getElementsByClassName("sub")[0];
+            //console.log(test08);
+            //span      --> ul            --> li
+            test08.nextElementSibling.firstElementChild.textContent="첫번째요소";
+            test08.nextElementSibling.children[2].textContent="값변경"; //내가 원하는 값을 바꾸고 싶을 때 children[]
+            //탐색 속성을 언제 사용할까?
+            //현재 상태가 Element인지 element객체여야 다음에 탐색 속성을 사용할 수 있음
+            //element.탐색속성
+
+            var test09 = document.getElementsByClassName("sub")[1];
+            test09.nextElementSibling.firstElementChild.textContent="어제";
+            test09.nextElementSibling.children[1].textContent="편남이랑";
+            test09.nextElementSibling.children[2].textContent="어땠어";
+            test09.nextElementSibling.children[3].textContent="?ㅋㅋㅋㅋㅋㅋㅋㅋ";
+        }
+    </script>
+</head>
+<body>
+    <span id="result"></span>
+    <h1>1. test01태그(id='a')를 포함한 div태그의 배경색을 적용하세요(parentNode속성사용)</h1>
+    <h1>2. id="b"인 div태그에 포함된 test04태그의 폰트 크기를 20pt로 적용하세요(childNodes사용)</h1>
+    <div onclick="testSearch()" style="width: 100px;background: yellow;">적용하기</div>
+    <hr/>
+    <div>
+        <p id="a">test01</p>
+        <p>test02</p>
+    </div>
+    <div id="b">
+        <p>test03</p>
+        <p>test04</p>
+    </div>
+    <h1>3.목록에서 &lt;li&gt;test08&lt;/li&gt; 요소를 &lt;li&gt;첫번째요소&lt;/li&gt;로 바꾸시오
+    (nextElementSibling,firstElementChild사용): class="sub"인 태그 첫번째가 타겟임</h1>
+    <div onclick="testSibling()" style="width: 100px;background: yellow;">적용하기</div>
+    <ul>
+        <li>test05</li>
+        <li>test06</li>
+        <li>
+            <span class="sub">test07</span>
+            <ul>
+                <li>test08</li>
+                <li>test09</li>
+                <li>test10</li>
+                <li>test11</li>
+                <li>test12</li>
+            </ul>
+        </li>
+        <li>
+            <span class="sub">test08</span>
+            <ul>
+                <li>test13</li>
+                <li>test14</li>
+                <li>test15</li>
+                <li>test16</li>
+                <li>test17</li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>

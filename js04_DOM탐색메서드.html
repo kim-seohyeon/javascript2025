@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //js에서 함수 선언하는 방식: function키워드로 선언
+        function searchId(){
+            var p = document.getElementById("idTest"); //<p></p> 객체 만들어서 var p에 저장함
+                console.log(typeof p); //p의 타입은 무엇인지
+                p.style.color = "red";
+                p.style.backgroundColor = "blue";
+        }
+
+        function searchClass(){
+            var span = document.getElementsByClassName("a");
+            console.log(typeof span);
+            //span.style.color = "red"; 오류 발생 -> for문 사용
+            for(var i=0; i<span.length; i++){
+                span[i].style.color = "red";
+            }
+        }
+    </script>
+    <style>
+        /* selector 표현식
+            1. id 선택자: #id이름
+            2. class 선택자: .class이름
+            3. 태그이름 선택자: 태그이름
+            4. 그밖의 방법: p > span, p span, p:hover, p[id=aaa]
+         */
+         h1{color:red;}
+         p > span {font-weight: bold;}
+    </style>
+</head>
+<body>
+    <h1>DOM탐색메서드의 종류</h1>
+    <p>
+        1. getElementById("idName"): 태그의 id 속성 이름으로 선택
+        - 반환값은 엘리먼트 1개 <button onclick="searchId()">확인</button>
+    </p>
+    <p id="idTest">idTest</p> <!-- 아이디 중복 X -->
+    <p>
+        2. getElementsByClassName("className"):class 속성 이름으로 선택
+        - 반환값은 엘리먼트 여러 개(유사 배열 형태)
+        <button onclick="searchClass()">확인</button>
+    </p>
+    <p>
+        <span class = "a">class</span> <!--<span>: 기능이 없는게 기능-->
+        <span class = "a">이름</span> <!--class는 중복 O-->
+        <span class = "a">탐색</span>
+    </p>
+    <p>
+        3. getElementsByTagNmae("tagName")
+        4. getElementsByName("name"): input 요소에서만 존재하는 name 속성
+    </p>
+    <p>
+        5. querySelectorAll("selector표현식"): 값 여러 개(배열) <!--css의 표현식으 알아야 함--><br/>
+        6. querySelector("selector표현식"): 값 한 개
+        <button onclick="searchQuery()">확인</button>
+    </p>
+    <script>
+        function searchQuery(){
+            var h1 = document.querySelectorAll("h1"); //배열로 반환 [h1, h2, h3]
+            h1[0].textContent = "CSS의 셀렉터 표현식";
+            //h1[0].innerHTML = "<i>CSS</i>의 셀렉터 표현식"; //비스듬히 출력
+
+            var spans = document.querySelectorAll("p > span");
+            spans[0].style.color = "blue";
+        }
+    </script>
+</body>
+</html>

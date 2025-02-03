@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //선언적 함수
+        //다른 객체나 함수에서 호출해서 사용 --> 재사용 가능
+        //파라미터 정의: function func(a, b c){}
+        //              호출할 때 func(1, 2, 3);, func(1), func() 호출가능
+        //리턴값 정의: return 키워드 사용
+        function func01(){
+            console.log("선언적 함수");
+            let val = func02(5, 10);
+            console.log(val);
+        }
+
+        function func02(val1, val2){
+
+            return val1 + val2;
+        }
+
+        //익명함수: 객체 내부에서 사용되고 종료 --> 이름 없으니깐 다른 곳에서 호출 X
+        var func03 = function(){
+
+        }
+
+        var count = 0;
+        //파라미터로 기능을 전달할 때 많이 사용
+        // window.setInterval(function(){
+        //     count++;
+        //     console.log(count);
+        // }, 2000);
+        //선언적 함수의 이름만 써주면 기능 전달 가능
+        //함수이름() --> 괄호만 빼주면 실행하지 않음
+        //window.setInterval(func02, 2000);
+
+        window.onload = function(){
+            console.log("페이지가 시작되었습니다.");
+            //document.getElementsByTagName("h1")[1].onclick=function(){}
+
+            //익명함수의 축약형: ES6 화살표 함수 ()=>{}
+            //                                 a=>{} : 파라미터가 한 개면 () 생략
+            //                                 a=>a+4 : 코드가 한 줄이면 {} 생략
+            document.getElementsByTagName("h1")[1].onclick=()=>{
+                console.log("이벤트에서 익명함수 활용");
+            }
+
+            //1. 객체 리터럴 방식: 작성형식이 json 데이터 형식
+            //json이란 자바 스크립트에서 사용되는 데이터 형식
+            //{key1:value, key2:value... "a":"값1", "b":"값2"}
+            var pEle = document.getElementsByClassName("a"); //[p, p, p, p]
+            pEle[0].onclick=()=>{
+                //p 요소 중 0번째 요소에서 클릭이벤트가 발생하면 기능을 실행
+                console.log("객체 리터럴 방식");
+                var jsonObj = {
+                    subject: "javascript",
+                    credit: 1,
+                    printOut: function(){
+                        return jsonObj.subject + "," + jsonObj.credit + "학점"
+                    }
+                }
+
+                //함수에 괄호가 붙어있으면 실행 시키는 것 없으면 전달
+                //객체에 정의된 메서드를 호출
+                console.log(jsonObj.printOut());
+                //객체에 정의된 메서드를 다른 함수로 전달
+                printCredit(jsonObj.printOut);
+
+                //객체의 값을 변경하는 경우
+                jsonObj.subject = "JS"; //update개념, set
+                jsonObj["test"] = "value"; // insert개념, add
+                delete jsonObj["credit"]; //delete개념 
+
+                //ES6에서 추가된 기능 정리
+                //1. 화살표 함수
+                jsonObj["arrowFunc"]=(val1, val2)=>{console.log(val1, val2)};
+
+                //2. 구조분해할당 기능
+                let subject1 = jsonObj.subject;
+                let test1 = jsonObj.test;
+
+                let {subject, test} = jsonObj; //구조분해할당
+                console.log(subject, test);
+
+                //3. 템플릿 리터럴
+                console.log(`템플릿리터럴${subject}`);
+
+            } //객체 리터럴 방식 종료
+
+            //2. 객체 생성자 함수 방식
+            pEle[1].onclick=()=>{
+                let info = new Info();
+                console.log(info.getTest()); //test필드에 바로 접근 못하기 때문에 메서드를 통해 접근함
+                console.log(info.printOut());
+            }
+        }
+
+        //생성자 함수
+        function Info(){
+            var test ="일반 변수";
+            //변수나 메서드를 선언할 때 this 예약어를 사용
+            this.subject = "javascript";
+            this.credit=2;
+            this.printOut = function(){
+                return `${this.subject}, ${this.credit}학점`;
+            }
+            // test 변수의 값을 반환하는 메서드
+            this.getTest = function(){
+                return test;
+            }
+        }        
+
+        //파라미터로 함수를 전달 받아서 실행하는 기능
+        function printCredit(func){
+            console.log(func());
+        }
+
+    </script>
+</head>
+<body>
+    <h1>선언적함수: 이름이 정의되어 있는 함수</h1>
+    <h1>익명함수: 이름이 없는 함수</h1>
+    <h1>자바스크립트에서 객체 만들기</h1>
+    <p class="a">1. 객체 리터럴 방식</p>
+    <p class="a">2. 객체 생성자함수 방식</p>
+    <p class="a">-프로토타입 사용하기</p>
+    <p class="a">-클로저 사용하기</p>
+</body>
+</html>

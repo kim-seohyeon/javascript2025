@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+        DOM객체의 종류
+        - Document: 문서에 접근할 때 사용 -> 문서 객체
+        - Element: tag, 요소, 엘리먼트로 불림 -> 태그 객체
+                    -> DOM 탐색 메서드로 탐색하는 방법: 직접 선택 방법 
+        - Attribute: 속성을 객체로 정의 -> id, class, style, disabled, value (태그안에 들어가는 속성들)
+        - Text: text를 객체로 정의 -> <p>text</p> -> text를 객체로 정의
+        - node: html을 구성하는 모든 요소를 정의
+
+        var ele = new Element(); (X)
+
+        객체 생성하는 방법
+        1. DOM탐색 메서드를 이용(직접 선택)
+        2. DOM탐색 속성을 이용(간접 선택)
+         - parentNode속성: 타겟 요소의 부모요소를 구하는 속성 : 반환타입은 Node
+         - parentElement속성: 동일한 기능 : 반환타입은 Element
+         
+         - childNodes속성: 타겟 요소의 자식요소를 구하는 속성 : 반환타입은 Nodes
+         - children속성: 동일한 기능 : 반환타입은 Element
+         
+         - previousSibling/nextSibling: 형제요소를 구하는 속성 : 반환타입은 Node
+         - previousElementSibling/nextElementSibling: 동일한 기능 : 반환타입은 Element
+
+         3. create 메서드를 이용한 방법
+          - creatElement(): tag객체 생성
+          - creatAttribute(): 속성 생성
+          - creatTextNode(): text 생성
+        */
+       
+       //parent 속성
+        function searchPar(){
+            var child02 = document.querySelectorAll("p")[1];
+            //var child02 = document.getElementsByTagName("p")[1];
+            var child02Parent = child02.parentNode; //부모구하기
+            console.log(child02Parent.tagName); //tagName, nodeName 속성
+            
+            var child02ParentElement = child02.parentElement; //부모 구하기
+            console.log(child02ParentElement.tagName);
+
+            //객체를 구하면 원하는 기능을 엘리먼트에 적용할 수 있다.
+            //child02ParentElement.innerHTML="";
+            child02ParentElement.style.backgroundColor = "orange";
+       }
+
+       //child 속성
+       function searchChi(){
+            var div = document.querySelectorAll("div")[0]; // target요소
+            
+            //반환값: ['text', p, 'text', p, 'text', p]
+            var divChildNodes = div.childNodes;
+            console.log(divChildNodes[1].textContent); //node는 모든 요소를 대상으로 함
+            
+            var divChildElement = div.children;
+            console.log(divChildElement[0].tagName);
+
+            divChildElement[0].style.color = "red";
+            divChildElement[1].textContent = "자식요소02";
+       }
+
+       //firstChild, lastChild 자식 요소 중에 첫번째/마지막번째 요소 탐색
+       function firstLastChi(){
+            var div = document.querySelectorAll("div")[0];
+            var firstChi = div.firstChild; //node 반환
+            var firstChiEle = div.firstElementChild; //element 반환
+            console.log(firstChi.nodeName, firstChiEle.textContent);
+
+            var lastChi = div.lastChild;
+            var lastChiEle = div.lastElementChild;
+            console.log(lastChi.nodeName, lastChiEle.textContent);
+       }
+
+       //sibling 속성
+       function siblingTest(){
+            var child02 = document.getElementsByTagName("p")[1];
+
+            //Element 반환
+            var prePEle = child02.previousElementSibling; //p[0]
+            var nextPEle = child02.nextElementSibling; //p[2]
+            console.log(prePEle.textContent, nextPEle.textContent);
+
+            //트리탐색
+            child02.parentElement.nextElementSibling.children[1].style.color = "red";
+
+
+       }
+    </script>
+</head>
+<body>
+    <h1>DOM탐색방법</h1>
+    <div>
+        <p>child01</p>
+        <p>child02</p>
+        <p>child03</p>
+    </div>
+    <div>
+        <button onclick="searchPar()">부모탐색</button> <!--인라인 요소는 블록안에 써야함-->
+        <button onclick="searchChi()">자식탐색</button> 
+        <button onclick="firstLastChi()">자식탐색2</button> 
+        <button onclick="siblingTest()">형제탐색</button> 
+
+    </div>
+</body>
+</html
